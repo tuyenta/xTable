@@ -30,7 +30,7 @@ class GhostscriptBackend(object):
         if not self.installed():
             raise OSError(
                 "Ghostscript is not installed. You can install it using the instructions"
-                " here: https://camelot-py.readthedocs.io/en/master/user/install-deps.html"
+                " here: https://xtable-py.readthedocs.io/en/master/user/install-deps.html"
             )
 
         import ghostscript

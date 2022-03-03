@@ -6,8 +6,8 @@ import sys
 import pytest
 from click.testing import CliRunner
 
-from camelot.cli import cli
-from camelot.utils import TemporaryDirectory
+from xtable.cli import cli
+from xtable.utils import TemporaryDirectory
 
 
 testdir = os.path.dirname(os.path.abspath(__file__))
@@ -25,7 +25,7 @@ def test_help_output():
     result = runner.invoke(cli, ["--help"])
     output = result.output
 
-    assert prog_name == "camelot"
+    assert prog_name == "xtable"
     assert result.output.startswith("Usage: %(prog_name)s [OPTIONS] COMMAND" % locals())
     assert all(
         v in result.output

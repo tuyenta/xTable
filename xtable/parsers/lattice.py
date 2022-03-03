@@ -31,7 +31,7 @@ from ..image_processing import (
 from ..backends.image_conversion import BACKENDS
 
 
-logger = logging.getLogger("camelot")
+logger = logging.getLogger("xtable")
 
 
 class Lattice(BaseParser):
@@ -168,7 +168,7 @@ class Lattice(BaseParser):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
         idx : list
             List of tuples of the form (r_idx, c_idx, text).
         shift_text : list
@@ -212,7 +212,7 @@ class Lattice(BaseParser):
 
         Parameters
         ----------
-        t : camelot.core.Table
+        t : xtable.core.Table
         copy_text : list, optional (default: None)
             {'h', 'v'}
             Select one or more strings from above and pass them as a list
@@ -221,7 +221,7 @@ class Lattice(BaseParser):
 
         Returns
         -------
-        t : camelot.core.Table
+        t : xtable.core.Table
 
         """
         for f in copy_text:
@@ -409,7 +409,7 @@ class Lattice(BaseParser):
         if not self.horizontal_text:
             if self.images:
                 warnings.warn(
-                    "{} is image-based, camelot only works on"
+                    "{} is image-based, xtable only works on"
                     " text-based pages.".format(os.path.basename(self.rootname))
                 )
             else:

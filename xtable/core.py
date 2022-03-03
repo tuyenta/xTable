@@ -76,7 +76,7 @@ class TextEdge(object):
 class TextEdges(object):
     """Defines a dict of left, right and middle text edges found on
     the PDF page. The dict has three keys based on the alignments,
-    and each key's value is a list of camelot.core.TextEdge objects.
+    and each key's value is a list of xtable.core.TextEdge objects.
     """
 
     def __init__(self, edge_tol=50):
@@ -666,7 +666,7 @@ class Table(object):
 
 
 class TableList(object):
-    """Defines a list of camelot.core.Table objects. Each table can
+    """Defines a list of xtable.core.Table objects. Each table can
     be accessed using its index.
 
     Attributes

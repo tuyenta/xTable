@@ -158,11 +158,11 @@ class PDFHandler(object):
         layout_kwargs : dict, optional (default: {})
             A dict of `pdfminer.layout.LAParams <https://github.com/euske/pdfminer/blob/master/pdfminer/layout.py#L33>`_ kwargs.
         kwargs : dict
-            See camelot.read_pdf kwargs.
+            See xtable.read_pdf kwargs.
 
         Returns
         -------
-        tables : camelot.core.TableList
+        tables : xtable.core.TableList
             List of tables found in PDF.
 
         """

@@ -12,7 +12,7 @@ from ..core import TextEdges, Table
 from ..utils import text_in_bbox, get_table_index, compute_accuracy, compute_whitespace
 
 
-logger = logging.getLogger("camelot")
+logger = logging.getLogger("xtable")
 
 
 class Stream(BaseParser):
@@ -446,7 +446,7 @@ class Stream(BaseParser):
         if not self.horizontal_text:
             if self.images:
                 warnings.warn(
-                    f"{base_filename} is image-based, camelot only works on"
+                    f"{base_filename} is image-based, xtable only works on"
                     " text-based pages."
                 )
             else:

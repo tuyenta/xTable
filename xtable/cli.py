@@ -14,7 +14,7 @@ else:
 from . import __version__, read_pdf, plot
 
 
-logger = logging.getLogger("camelot")
+logger = logging.getLogger("xtable")
 logger.setLevel(logging.INFO)
 
 
@@ -29,7 +29,7 @@ class Config(object):
 pass_config = click.make_pass_decorator(Config)
 
 
-@click.group(name="camelot")
+@click.group(name="xtable")
 @click.version_option(version=__version__)
 @click.option("-q", "--quiet", is_flag=False, help="Suppress logs and warnings.")
 @click.option(
@@ -74,7 +74,7 @@ pass_config = click.make_pass_decorator(Config)
 )
 @click.pass_context
 def cli(ctx, *args, **kwargs):
-    """Camelot: PDF Table Extraction for Humans"""
+    """xtable: PDF Table Extraction for Humans"""
     ctx.obj = Config()
     for key, value in kwargs.items():
         ctx.obj.set_config(key, value)

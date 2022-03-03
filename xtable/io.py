@@ -95,7 +95,7 @@ def read_pdf(
 
     Returns
     -------
-    tables : camelot.core.TableList
+    tables : xtable.core.TableList
 
     """
     if flavor not in ["lattice", "stream"]:

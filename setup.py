@@ -6,7 +6,7 @@ from setuptools import find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
-with open(os.path.join(here, "camelot", "__version__.py"), "r") as f:
+with open(os.path.join(here, "xtable", "__version__.py"), "r") as f:
     exec(f.read(), about)
 
 with open("README.md", "r") as f:
@@ -66,7 +66,7 @@ def setup_package():
         },
         entry_points={
             "console_scripts": [
-                "camelot = camelot.cli:cli",
+                "xtable = xtable.cli:cli",
             ],
         },
         classifiers=[

@@ -2,8 +2,8 @@
 
 import pytest
 
-import camelot.backends.image_conversion
-from camelot.backends import ImageConversionBackend
+import xtable.backends.image_conversion
+from xtable.backends import ImageConversionBackend
 
 
 class PopplerBackendError(object):
@@ -27,7 +27,7 @@ def test_poppler_backend_error_when_no_use_fallback(monkeypatch):
         "ghostscript": GhostscriptBackendNoError,
     }
     monkeypatch.setattr(
-        "camelot.backends.image_conversion.BACKENDS", BACKENDS, raising=True
+        "xtable.backends.image_conversion.BACKENDS", BACKENDS, raising=True
     )
     backend = ImageConversionBackend(use_fallback=False)
 
@@ -42,7 +42,7 @@ def test_ghostscript_backend_when_use_fallback(monkeypatch):
         "ghostscript": GhostscriptBackendNoError,
     }
     monkeypatch.setattr(
-        "camelot.backends.image_conversion.BACKENDS", BACKENDS, raising=True
+        "xtable.backends.image_conversion.BACKENDS", BACKENDS, raising=True
     )
     backend = ImageConversionBackend()
     backend.convert("foo", "bar")
@@ -51,7 +51,7 @@ def test_ghostscript_backend_when_use_fallback(monkeypatch):
 def test_ghostscript_backend_error_when_use_fallback(monkeypatch):
     BACKENDS = {"poppler": PopplerBackendError, "ghostscript": GhostscriptBackendError}
     monkeypatch.setattr(
-        "camelot.backends.image_conversion.BACKENDS", BACKENDS, raising=True
+        "xtable.backends.image_conversion.BACKENDS", BACKENDS, raising=True
     )
     backend = ImageConversionBackend()
 

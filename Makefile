@@ -15,7 +15,7 @@ install:
 	pip install ".[dev]"
 
 test:
-	pytest --verbose --cov-config .coveragerc --cov-report term --cov-report xml --cov=camelot --mpl
+	pytest --verbose --cov-config .coveragerc --cov-report term --cov-report xml --cov=xtable --mpl
 
 docs:
 	cd docs && make html
@@ -25,4 +25,4 @@ publish:
 	pip install twine
 	python setup.py sdist
 	twine upload dist/*
-	rm -fr build dist .egg camelot_py.egg-info
+	rm -fr build dist .egg xtable.egg-info

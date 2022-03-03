@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-VERSION = (0, 10, 1)
-PRERELEASE = None  # alpha, beta or rc
+VERSION = (0, 0, 1)
+PRERELEASE = "alpha"  # alpha, beta or rc
 REVISION = None
 
 
@@ -14,10 +14,10 @@ def generate_version(version, prerelease=None, revision=None):
     return "".join(version_parts)
 
 
-__title__ = "camelot-py"
-__description__ = "PDF Table Extraction for Humans."
+__title__ = "xtable"
+__description__ = "Table Extraction for Documents."
 __url__ = "http://camelot-py.readthedocs.io/"
 __version__ = generate_version(VERSION, prerelease=PRERELEASE, revision=REVISION)
-__author__ = "Vinayak Mehta"
-__author_email__ = "vmehta94@gmail.com"
+__author__ = "Duc Tuyen TA"
+__author_email__ = "tuyentd86@gmail.com"
 __license__ = "MIT License"

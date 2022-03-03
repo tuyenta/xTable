@@ -569,7 +569,7 @@ def split_textline(table, textline, direction, flag_size=False, strip_text=""):
 
     Parameters
     ----------
-    table : camelot.core.Table
+    table : xtable.core.Table
     textline : object
         PDFMiner LTTextLine object.
     direction : string
@@ -689,7 +689,7 @@ def get_table_index(
 
     Parameters
     ----------
-    table : camelot.core.Table
+    table : xtable.core.Table
     t : object
         PDFMiner LTTextLine object.
     direction : string

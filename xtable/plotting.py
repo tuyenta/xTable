@@ -17,8 +17,8 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table: camelot.core.Table
-            A Camelot Table.
+        table: xtable.core.Table
+            A xtable Table.
         kind : str, optional (default: 'text')
             {'text', 'grid', 'contour', 'joint', 'line'}
             The element type for which a plot should be generated.
@@ -53,7 +53,7 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
 
         Returns
         -------
@@ -77,7 +77,7 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
 
         Returns
         -------
@@ -104,7 +104,7 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
 
         Returns
         -------
@@ -152,7 +152,7 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
 
         Returns
         -------
@@ -182,7 +182,7 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
 
         Returns
         -------
@@ -208,7 +208,7 @@ class PlotMethods(object):
 
         Parameters
         ----------
-        table : camelot.core.Table
+        table : xtable.core.Table
 
         Returns
         -------
