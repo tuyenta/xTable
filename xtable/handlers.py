@@ -222,9 +222,7 @@ class PDFHandler(object):
         pages: str = "1",
         password: Union[str, None] = None,
     ):
-        if is_url(filepath):
-            filepath = download_url(filepath)
-        self.filepath = filepath
+        self.filepath = download_url(filepath) if is_url(filepath) else filepath
         if not filepath.lower().endswith(".pdf"):
             raise NotImplementedError("File format not supported")
 
