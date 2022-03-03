@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://github.com/tuyenta/xTable/blob/master/docs/logo/xtable.png" width="200">
+   <img src="https://github.com/tuyenta/xTable/blob/master/docs/logo/xtable.png" width="400">
 </p>
 
 # xTable: Table Extraction from Document
