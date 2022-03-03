@@ -3,9 +3,9 @@ import os
 import pathlib
 from typing import Union
 
-from source.pdf_table_extraction.helpers.img_utils import bboxes_pdf
-from source.pdf_table_extraction.helpers.pdf_utils import norm_pdf_page, pdf_page2img
-from source.pdf_table_extraction.table_extraction.detect_table_region.detect_func import (
+from .helpers.img_utils import bboxes_pdf
+from .helpers.pdf_utils import norm_pdf_page, pdf_page2img
+from .detect_func import (
     detectTable,
     parameters,
 )

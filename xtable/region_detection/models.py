@@ -1,7 +1,7 @@
 import torch.nn.functional as F
 
-from source.pdf_table_extraction.table_extraction.detect_table_region.parse_config import *
-from source.pdf_table_extraction.table_extraction.detect_table_region.utils import *
+from .parse_config import *
+from .helpers.utils import *
 
 ONNX_EXPORT = False
 

@@ -8,7 +8,7 @@ from .helpers.plotting import PlotMethods
 
 
 # set up logging
-logger = logging.getLogger("camelot")
+logger = logging.getLogger("xtable")
 
 format_string = "%(asctime)s - %(levelname)s - %(message)s"
 formatter = logging.Formatter(format_string, datefmt="%Y-%m-%dT%H:%M:%S")

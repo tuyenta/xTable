@@ -15,7 +15,7 @@ from PIL import Image, ExifTags
 import torch
 from torch.utils.data import Dataset
 
-from source.pdf_table_extraction.table_extraction.detect_table_region.utils import (
+from .helpers.utils import (
     xyxy2xywh,
     xywh2xyxy,
 )

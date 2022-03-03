@@ -1,9 +1,9 @@
-import source
+import xtable
 import pathlib
 
-from source.pdf_table_extraction.table_extraction.detect_table_region.models import *
-from source.pdf_table_extraction.table_extraction.detect_table_region.datasets import *
-from source.pdf_table_extraction.table_extraction.detect_table_region.utils import *
+from .models import *
+from .datasets import *
+from .helpers.utils import *
 
 
 def detectTable(opt):
@@ -160,24 +160,21 @@ class parameters:
 
     def __init__(self, img, img_size):
         self.cfg = str(
-            pathlib.Path(source.__file__).parent
-            / "pdf_table_extraction"
+            pathlib.Path(xtable.__file__).parent
+            / "region_detection"
             / "models"
-            / "table_region_detection"
             / "yolov3-tiny_table.cfg"
         )
         self.names = str(
-            pathlib.Path(source.__file__).parent
-            / "pdf_table_extraction"
+            pathlib.Path(xtable.__file__).parent
+            / "region_detection"
             / "models"
-            / "table_region_detection"
             / "table.names"
         )
         self.weights = str(
-            pathlib.Path(source.__file__).parent
-            / "pdf_table_extraction"
+            pathlib.Path(xtable.__file__).parent
+            / "region_detection"
             / "models"
-            / "table_region_detection"
             / "best_v2.weights"
         )
         self.source = img
