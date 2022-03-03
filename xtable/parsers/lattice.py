@@ -12,7 +12,7 @@ import pandas as pd
 
 from .base import BaseParser
 from ..core import Table
-from ..helpers.utils  import (
+from ..helpers.utils import (
     scale_image,
     scale_pdf,
     segments_in_bbox,

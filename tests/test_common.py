@@ -77,7 +77,7 @@ def test_repr_ghostscript():
 
 
 def test_url_poppler():
-    #TODO: build doc for xtable
+    # TODO: build doc for xtable
     url = "https://camelot-py.readthedocs.io/en/master/_static/pdf/foo.pdf"
     tables = xtable.read_pdf(url, backend="poppler")
     assert repr(tables) == "<TableList n=1>"
@@ -87,7 +87,7 @@ def test_url_poppler():
 
 @skip_on_windows
 def test_url_ghostscript():
-    #TODO: build doc for xtable
+    # TODO: build doc for xtable
     url = "https://camelot-py.readthedocs.io/en/master/_static/pdf/foo.pdf"
     tables = xtable.read_pdf(url, backend="ghostscript")
     assert repr(tables) == "<TableList n=1>"
@@ -96,7 +96,7 @@ def test_url_ghostscript():
 
 
 def test_pages_poppler():
-    #TODO: build doc for xtable
+    # TODO: build doc for xtable
     url = "https://camelot-py.readthedocs.io/en/master/_static/pdf/foo.pdf"
     tables = xtable.read_pdf(url, backend="poppler")
     assert repr(tables) == "<TableList n=1>"
@@ -116,7 +116,7 @@ def test_pages_poppler():
 
 @skip_on_windows
 def test_pages_ghostscript():
-    #TODO: build doc for xtable
+    # TODO: build doc for xtable
     url = "https://camelot-py.readthedocs.io/en/master/_static/pdf/foo.pdf"
     tables = xtable.read_pdf(url, backend="ghostscript")
     assert repr(tables) == "<TableList n=1>"

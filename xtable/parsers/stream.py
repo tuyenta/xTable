@@ -9,7 +9,12 @@ import pandas as pd
 
 from .base import BaseParser
 from ..core import TextEdges, Table
-from ..helpers.utils import text_in_bbox, get_table_index, compute_accuracy, compute_whitespace
+from ..helpers.utils import (
+    text_in_bbox,
+    get_table_index,
+    compute_accuracy,
+    compute_whitespace,
+)
 
 
 logger = logging.getLogger("xtable")

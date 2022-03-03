@@ -62,9 +62,7 @@ def test_stream_table_areas():
     df = pd.DataFrame(data_stream_table_areas)
 
     filename = os.path.join(testdir, "tabula/us-007.pdf")
-    tables = xtable.read_pdf(
-        filename, flavor="stream", table_areas=["320,500,573,335"]
-    )
+    tables = xtable.read_pdf(filename, flavor="stream", table_areas=["320,500,573,335"])
     assert_frame_equal(df, tables[0].df)
 
 

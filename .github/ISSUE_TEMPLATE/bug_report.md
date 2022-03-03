@@ -15,7 +15,7 @@ assignees: ''
 
 **Steps to reproduce the bug**
 
-<!-- Steps used to install `camelot`:
+<!-- Steps used to install `xtable`:
 1. Add step here (you can add more steps too) -->
 
 <!-- Steps to be used to reproduce behavior:
@@ -27,10 +27,10 @@ assignees: ''
 
 **Code**
 
-<!-- Add the Camelot code snippet that you used. -->
+<!-- Add the xtable code snippet that you used. -->
 
 ```
-import camelot
+import xtable
 
 # add your code here
 ```
@@ -50,7 +50,7 @@ import camelot
 - Numpy version:
 - OpenCV version:
 - Ghostscript version:
-- Camelot version:
+- xTable version:
 
 **Additional context**
 

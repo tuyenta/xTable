@@ -3,31 +3,31 @@
 API Reference
 =============
 
-.. module:: camelot
+.. module:: xTable
 
 Main Interface
 --------------
-.. autofunction:: camelot.read_pdf
+.. autofunction:: xtable.read_pdf
 
 Lower-Level Classes
 -------------------
 
-.. autoclass:: camelot.handlers.PDFHandler
+.. autoclass:: xtable.handlers.PDFHandler
    :inherited-members:
 
-.. autoclass:: camelot.parsers.Stream
+.. autoclass:: xtable.parsers.Stream
    :inherited-members:
 
-.. autoclass:: camelot.parsers.Lattice
+.. autoclass:: xtable.parsers.Lattice
    :inherited-members:
 
 Lower-Lower-Level Classes
 -------------------------
 
-.. autoclass:: camelot.core.TableList
+.. autoclass:: xtable.core.TableList
    :inherited-members:
 
-.. autoclass:: camelot.core.Table
+.. autoclass:: xtable.core.Table
    :inherited-members:
 
-.. autoclass:: camelot.core.Cell
+.. autoclass:: xtable.core.Cell

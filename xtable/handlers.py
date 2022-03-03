@@ -216,7 +216,12 @@ class PDFHandler(object):
 
     """
 
-    def __init__(self, filepath: Union[pathlib.Path, str], pages: str="1", password: Union[str, None]=None):
+    def __init__(
+        self,
+        filepath: Union[pathlib.Path, str],
+        pages: str = "1",
+        password: Union[str, None] = None,
+    ):
         if is_url(filepath):
             filepath = download_url(filepath)
         self.filepath = filepath
@@ -385,4 +390,3 @@ class PDFHandler(object):
                 )
                 tables.extend(t)
         return TableList(sorted(tables))
-
