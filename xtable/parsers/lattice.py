@@ -187,22 +187,18 @@ class Lattice(BaseParser):
         indices = []
         for r_idx, c_idx, text in idx:
             for d in shift_text:
-                if d == "l":
-                    if table.cells[r_idx][c_idx].hspan:
-                        while not table.cells[r_idx][c_idx].left:
-                            c_idx -= 1
-                if d == "r":
-                    if table.cells[r_idx][c_idx].hspan:
-                        while not table.cells[r_idx][c_idx].right:
-                            c_idx += 1
-                if d == "t":
-                    if table.cells[r_idx][c_idx].vspan:
-                        while not table.cells[r_idx][c_idx].top:
-                            r_idx -= 1
-                if d == "b":
-                    if table.cells[r_idx][c_idx].vspan:
-                        while not table.cells[r_idx][c_idx].bottom:
-                            r_idx += 1
+                 if d == "l" and table.cells[r_idx][c_idx].hspan:
+                     while not table.cells[r_idx][c_idx].left:
+                         c_idx -= 1
+                 if d == "r" and table.cells[r_idx][c_idx].hspan:
+                     while not table.cells[r_idx][c_idx].right:
+                         c_idx += 1
+                 if d == "t" and table.cells[r_idx][c_idx].vspan:
+                     while not table.cells[r_idx][c_idx].top:
+                         r_idx -= 1
+                 if d == "b" and table.cells[r_idx][c_idx].vspan:
+                     while not table.cells[r_idx][c_idx].bottom:
+                         r_idx += 1
             indices.append((r_idx, c_idx, text))
         return indices
 
