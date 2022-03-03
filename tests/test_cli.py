@@ -7,7 +7,7 @@ import pytest
 from click.testing import CliRunner
 
 from xtable.cli import cli
-from xtable.utils import TemporaryDirectory
+from xtable.helpers.utils import TemporaryDirectory
 
 
 testdir = os.path.dirname(os.path.abspath(__file__))

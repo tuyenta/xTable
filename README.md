@@ -11,15 +11,15 @@
 
 **xTable** is a Python library that can help you extract tables from documents in PDFs, both scanned nor native!
 
-**Note:** You can also check out [Excalibur](https://github.com/camelot-dev/excalibur), the web interface to Camelot!
+**Note:** You can also check out [Excalibur](https://github.com/camelot-dev/excalibur), the web interface to xTable!
 
 ---
 
 **Here's how you can extract tables from PDFs.** You can check out the PDF used in this example [here](https://github.com/camelot-dev/camelot/blob/master/docs/_static/pdf/foo.pdf).
 
 <pre>
->>> import camelot
->>> tables = camelot.read_pdf('foo.pdf')
+>>> import xtable
+>>> tables = xtable.read_pdf('foo.pdf')
 >>> tables
 &lt;TableList n=1&gt;
 >>> tables.export('foo.csv', f='csv', compress=True) # json, excel, html, markdown, sqlite
@@ -45,15 +45,15 @@
 | 2032_2     | 0.17      | 57.8          | 21.7%                | 0.3%            | 2.7%            | 1.2%           |
 | 4171_1     | 0.07      | 173.9         | 58.1%                | 1.6%            | 2.1%            | 0.5%           |
 
-Camelot also comes packaged with a [command-line interface](https://camelot-py.readthedocs.io/en/master/user/cli.html)!
+xTable also comes packaged with a [command-line interface](https://camelot-py.readthedocs.io/en/master/user/cli.html)!
 
-**Note:** Camelot only works with text-based PDFs and not scanned documents. (As Tabula [explains](https://github.com/tabulapdf/tabula#why-tabula), "If you can click and drag to select text in your table in a PDF viewer, then your PDF is text-based".)
+**Note:** xTable only works with text-based PDFs and not scanned documents. (As Tabula [explains](https://github.com/tabulapdf/tabula#why-tabula), "If you can click and drag to select text in your table in a PDF viewer, then your PDF is text-based".)
 
 You can check out some frequently asked questions [here](https://camelot-py.readthedocs.io/en/master/user/faq.html).
 
-## Why Camelot?
+## Why xTable?
 
-- **Configurability**: Camelot gives you control over the table extraction process with [tweakable settings](https://camelot-py.readthedocs.io/en/master/user/advanced.html).
+- **Configurability**: xTable gives you control over the table extraction process with [tweakable settings](https://camelot-py.readthedocs.io/en/master/user/advanced.html).
 - **Metrics**: You can discard bad tables based on metrics like accuracy and whitespace, without having to manually look at each table.
 - **Output**: Each table is extracted into a **pandas DataFrame**, which seamlessly integrates into [ETL and data analysis workflows](https://gist.github.com/vinayak-mehta/e5949f7c2410a0e12f25d3682dc9e873). You can also export tables to multiple formats, which include CSV, JSON, Excel, HTML, Markdown, and Sqlite.
 
@@ -61,24 +61,24 @@ See [comparison with similar libraries and tools](https://github.com/camelot-dev
 
 ## Support the development
 
-If Camelot has helped you, please consider supporting its development with a one-time or monthly donation [on OpenCollective](https://opencollective.com/camelot).
+If xTable has helped you, please consider supporting its development with a one-time or monthly donation [on OpenCollective](https://opencollective.com/camelot).
 
 ## Installation
 
 ### Using conda
 
-The easiest way to install Camelot is with [conda](https://conda.io/docs/), which is a package manager and environment management system for the [Anaconda](http://docs.continuum.io/anaconda/) distribution.
+The easiest way to install xTable is with [conda](https://conda.io/docs/), which is a package manager and environment management system for the [Anaconda](http://docs.continuum.io/anaconda/) distribution.
 
 <pre>
-$ conda install -c conda-forge camelot-py
+$ conda install -c conda-forge xtable
 </pre>
 
 ### Using pip
 
-After [installing the dependencies](https://camelot-py.readthedocs.io/en/master/user/install-deps.html) ([tk](https://packages.ubuntu.com/bionic/python/python-tk) and [ghostscript](https://www.ghostscript.com/)), you can also just use pip to install Camelot:
+After [installing the dependencies](https://camelot-py.readthedocs.io/en/master/user/install-deps.html) ([tk](https://packages.ubuntu.com/bionic/python/python-tk) and [ghostscript](https://www.ghostscript.com/)), you can also just use pip to install xTable:
 
 <pre>
-$ pip install "camelot-py[base]"
+$ pip install "xtable[base]"
 </pre>
 
 ### From the source code
@@ -89,10 +89,10 @@ After [installing the dependencies](https://camelot-py.readthedocs.io/en/master/
 $ git clone https://www.github.com/camelot-dev/camelot
 </pre>
 
-and install Camelot using pip:
+and install xTable using pip:
 
 <pre>
-$ cd camelot
+$ cd xtable
 $ pip install ".[base]"
 </pre>
 
@@ -100,9 +100,6 @@ $ pip install ".[base]"
 
 The documentation is available at [http://camelot-py.readthedocs.io/](http://camelot-py.readthedocs.io/).
 
-## Wrappers
-
-- [camelot-php](https://github.com/randomstate/camelot-php) provides a [PHP](https://www.php.net/) wrapper on Camelot.
 
 ## Contributing
 
@@ -110,7 +107,7 @@ The [Contributor's Guide](https://camelot-py.readthedocs.io/en/master/dev/contri
 
 ## Versioning
 
-Camelot uses [Semantic Versioning](https://semver.org/). For the available versions, see the tags on this repository. For the changelog, you can check out [HISTORY.md](https://github.com/camelot-dev/camelot/blob/master/HISTORY.md).
+xTable uses [Semantic Versioning](https://semver.org/). For the available versions, see the tags on this repository. For the changelog, you can check out [HISTORY.md](https://github.com/camelot-dev/camelot/blob/master/HISTORY.md).
 
 ## License
 
