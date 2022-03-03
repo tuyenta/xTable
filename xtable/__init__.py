@@ -4,7 +4,7 @@ import logging
 
 from .__version__ import __version__
 from .io import read_pdf
-from .plotting import PlotMethods
+from .helpers.plotting import PlotMethods
 
 
 # set up logging

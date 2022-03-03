@@ -12,7 +12,7 @@ import pandas as pd
 
 from .base import BaseParser
 from ..core import Table
-from ..utils import (
+from ..helpers.utils  import (
     scale_image,
     scale_pdf,
     segments_in_bbox,
@@ -22,7 +22,7 @@ from ..utils import (
     compute_accuracy,
     compute_whitespace,
 )
-from ..image_processing import (
+from ..helpers.image_processing import (
     adaptive_threshold,
     find_lines,
     find_contours,
