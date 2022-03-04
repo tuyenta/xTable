@@ -2,4 +2,3 @@
 
 from .stream import Stream
 from .lattice import Lattice
-from .hybrid import Hybrid
