@@ -20,7 +20,7 @@ requires = [
     "openpyxl>=2.5.8",
     "pandas>=0.23.4",
     "pdfminer.six>=20200726",
-    "PyPDF2>=1.26.0",
+    'PyMuPDF==1.18.5',
     "tabulate>=0.8.9",
 ]
 
