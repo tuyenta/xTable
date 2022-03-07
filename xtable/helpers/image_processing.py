@@ -4,32 +4,24 @@ import cv2
 import numpy as np
 
 
-def adaptive_threshold(imagename, process_background=False, blocksize=15, c=-2):
+def adaptive_threshold(
+    imagename: str, process_background: bool = False, blocksize: int = 15, c: int = -2
+):
     """Thresholds an image using OpenCV's adaptiveThreshold.
 
-    Parameters
-    ----------
-    imagename : string
-        Path to image file.
-    process_background : bool, optional (default: False)
-        Whether or not to process lines that are in background.
-    blocksize : int, optional (default: 15)
-        Size of a pixel neighborhood that is used to calculate a
+    Args:
+        imagename (string): Path to image file.
+        process_background (bool): optional (default: False). Whether or not to process lines that are in background.
+        blocksize (int): optional (default: 15). Size of a pixel neighborhood that is used to calculate a
         threshold value for the pixel: 3, 5, 7, and so on.
-
         For more information, refer `OpenCV's adaptiveThreshold <https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html#adaptivethreshold>`_.
-    c : int, optional (default: -2)
-        Constant subtracted from the mean or weighted mean.
+        c (int): optional (default: -2) Constant subtracted from the mean or weighted mean.
         Normally, it is positive but may be zero or negative as well.
-
         For more information, refer `OpenCV's adaptiveThreshold <https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html#adaptivethreshold>`_.
 
-    Returns
-    -------
-    img : object
-        numpy.ndarray representing the original image.
-    threshold : object
-        numpy.ndarray representing the thresholded image.
+    Returns:
+        img (object): numpy.ndarray representing the original image.
+        threshold (object): numpy.ndarray representing the thresholded image.
 
     """
     img = cv2.imread(imagename)

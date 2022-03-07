@@ -12,7 +12,7 @@ from ..core import (
     TextAlignments,
     ALL_ALIGNMENTS,
     HORIZONTAL_ALIGNMENTS,
-    VERTICAL_ALIGNMENTS
+    VERTICAL_ALIGNMENTS,
 )
 from ..helpers.utils import (
     bbox_from_str,
@@ -34,20 +34,17 @@ MINIMUM_TEXTLINES_IN_TABLE = 6
 def column_spread(left, right, col_anchors):
     """Get the number of columns crossed by a segment [left, right]."""
     index_left = 0
-    while index_left < len(col_anchors) \
-            and col_anchors[index_left] < left:
+    while index_left < len(col_anchors) and col_anchors[index_left] < left:
         index_left += 1
     index_right = index_left
-    while index_right < len(col_anchors) \
-            and col_anchors[index_right] < right:
+    while index_right < len(col_anchors) and col_anchors[index_right] < right:
         index_right += 1
 
     return index_right - index_left
 
 
 def find_closest_tls(bbox, tls):
-    """ Search for tls that are the closest but outside in all 4 directions
-    """
+    """Search for tls that are the closest but outside in all 4 directions"""
     left, right, top, bottom = None, None, None, None
     (bbox_left, bbox_bottom, bbox_right, bbox_top) = bbox
     for textline in tls:
@@ -140,10 +137,7 @@ def search_header_from_body_bbox(body_bbox, textlines, col_anchors, max_v_gap):
             # Get the x-ranges for all the textlines, and merge the
             # x-ranges that overlap
             zones = zones + list(
-                map(
-                    lambda textline: [textline.x0, textline.x1],
-                    tls_in_new_row
-                )
+                map(lambda textline: [textline.x0, textline.x1], tls_in_new_row)
             )
             zones.sort(key=lambda z: z[0])  # Sort by left coordinate
             # Starting from the right, if two zones overlap horizontally,
@@ -153,7 +147,7 @@ def search_header_from_body_bbox(body_bbox, textlines, col_anchors, max_v_gap):
                 merged_something = False
                 for i in range(len(zones) - 1, 0, -1):
                     zone_right = zones[i]
-                    zone_left = zones[i-1]
+                    zone_left = zones[i - 1]
                     if zone_left[1] >= zone_right[0]:
                         zone_left[1] = max(zone_right[1], zone_left[1])
                         zones.pop(i)
@@ -162,9 +156,7 @@ def search_header_from_body_bbox(body_bbox, textlines, col_anchors, max_v_gap):
             max_spread = max(
                 list(
                     map(
-                        lambda zone: column_spread(
-                            zone[0], zone[1], col_anchors),
-                        zones
+                        lambda zone: column_spread(zone[0], zone[1], col_anchors), zones
                     )
                 )
             )
@@ -174,8 +166,8 @@ def search_header_from_body_bbox(body_bbox, textlines, col_anchors, max_v_gap):
             # columns.
             # This is to avoid picking unrelated paragraphs.
             if max_spread <= min(
-                    MAX_COL_SPREAD_IN_HEADER,
-                    math.ceil(len(col_anchors) / 2)):
+                MAX_COL_SPREAD_IN_HEADER, math.ceil(len(col_anchors) / 2)
+            ):
                 # Combined, the elements we've identified don't cross more
                 # than the authorized number of columns.
                 # We're trying to avoid
@@ -191,7 +183,7 @@ def search_header_from_body_bbox(body_bbox, textlines, col_anchors, max_v_gap):
     return new_bbox
 
 
-class AlignmentCounter():
+class AlignmentCounter:
     """
     For a given textline, represent all other textlines aligned with it.
 
@@ -214,30 +206,26 @@ class AlignmentCounter():
         return value
 
     def max_alignments(self, alignment_ids=None):
-        """Get the alignment dimension with the max number of textlines.
-
-        """
+        """Get the alignment dimension with the max number of textlines."""
         alignment_ids = alignment_ids or self.alignment_to_occurrences.keys()
         alignment_items = map(
             lambda alignment_id: (
                 alignment_id,
-                self.alignment_to_occurrences[alignment_id]
+                self.alignment_to_occurrences[alignment_id],
             ),
-            alignment_ids
+            alignment_ids,
         )
         return max(alignment_items, key=lambda item: len(item[1]))
 
     def max_v(self):
-        """Tuple (alignment_id, textlines) of largest vertical row.
-        """
+        """Tuple (alignment_id, textlines) of largest vertical row."""
         # Note that the horizontal alignments (left, center, right) are aligned
         # vertically in a column, so max_v is calculated by looking at
         # horizontal alignments.
         return self.max_alignments(HORIZONTAL_ALIGNMENTS)
 
     def max_h(self):
-        """Tuple (alignment_id, textlines) of largest horizontal col.
-        """
+        """Tuple (alignment_id, textlines) of largest horizontal col."""
         return self.max_alignments(VERTICAL_ALIGNMENTS)
 
     def max_v_count(self):
@@ -257,7 +245,7 @@ class AlignmentCounter():
         number of aligned elements - 1. The -1 is to avoid favoring
          singletons on a long line.
         """
-        return (self.max_v_count()-1) * (self.max_h_count()-1)
+        return (self.max_v_count() - 1) * (self.max_h_count() - 1)
 
 
 class TextNetworks(TextAlignments):
@@ -286,13 +274,11 @@ class TextNetworks(TextAlignments):
                 self._register_textline(textline)
 
     def _compute_alignment_counts(self):
-        """Build a dictionary textline -> alignment object.
-        """
+        """Build a dictionary textline -> alignment object."""
         for align_id, textedges in self._text_alignments.items():
             for textedge in textedges:
                 for textline in textedge.textlines:
-                    alignments = self._textline_to_alignments.get(
-                        textline, None)
+                    alignments = self._textline_to_alignments.get(textline, None)
                     if alignments is None:
                         alignments = AlignmentCounter()
                         self._textline_to_alignments[textline] = alignments
@@ -313,15 +299,17 @@ class TextNetworks(TextAlignments):
                     for i in range(len(text_alignment.textlines) - 1, -1, -1):
                         textline = text_alignment.textlines[i]
                         alignments = self._textline_to_alignments[textline]
-                        if alignments.max_h_count() <= 1 or \
-                           alignments.max_v_count() <= 1:
+                        if (
+                            alignments.max_h_count() <= 1
+                            or alignments.max_v_count() <= 1
+                        ):
                             del text_alignment.textlines[i]
                             removed_singletons = True
             self._textline_to_alignments = {}
             self._compute_alignment_counts()
 
     def most_connected_textline(self):
-        """ Retrieve the textline that is most connected across vertical and
+        """Retrieve the textline that is most connected across vertical and
         horizontal axis.
 
         """
@@ -331,16 +319,16 @@ class TextNetworks(TextAlignments):
         # before going to the header, typically harder to parse.
         return max(
             self._textline_to_alignments.keys(),
-            key=lambda textline:
-            (
+            key=lambda textline: (
                 self._textline_to_alignments[textline].alignment_score(),
-                -textline.y0, -textline.x0
+                -textline.y0,
+                -textline.x0,
             ),
-            default=None
+            default=None,
         )
 
     def compute_plausible_gaps(self):
-        """ Evaluate plausible gaps between cells horizontally and vertically
+        """Evaluate plausible gaps between cells horizontally and vertically
         based on the textlines aligned with the most connected textline.
 
         Returns
@@ -366,33 +354,29 @@ class TextNetworks(TextAlignments):
             return None
 
         h_textlines = sorted(
-            ref_h_textlines,
-            key=lambda textline: textline.x0,
-            reverse=True
+            ref_h_textlines, key=lambda textline: textline.x0, reverse=True
         )
         v_textlines = sorted(
-            ref_v_textlines,
-            key=lambda textline: textline.y0,
-            reverse=True
+            ref_v_textlines, key=lambda textline: textline.y0, reverse=True
         )
 
         h_gaps, v_gaps = [], []
         for i in range(1, len(v_textlines)):
-            v_gaps.append(v_textlines[i-1].y0 - v_textlines[i].y0)
+            v_gaps.append(v_textlines[i - 1].y0 - v_textlines[i].y0)
         for i in range(1, len(h_textlines)):
-            h_gaps.append(h_textlines[i-1].x0 - h_textlines[i].x0)
+            h_gaps.append(h_textlines[i - 1].x0 - h_textlines[i].x0)
 
-        if (not h_gaps or not v_gaps):
+        if not h_gaps or not v_gaps:
             return None
         percentile = 75
         gaps_hv = (
             2.0 * np.percentile(h_gaps, percentile),
-            2.0 * np.percentile(v_gaps, percentile)
+            2.0 * np.percentile(v_gaps, percentile),
         )
         return gaps_hv
 
     def search_table_body(self, gaps_hv, parse_details=None):
-        """ Build a candidate bbox for the body of a table using network algo
+        """Build a candidate bbox for the body of a table using network algo
 
         Seed the process with the textline with the highest alignment
         score, then expand the bbox with textlines within threshold.
@@ -423,14 +407,18 @@ class TextNetworks(TextAlignments):
             parse_details_search = {
                 "max_h_gap": max_h_gap,
                 "max_v_gap": max_v_gap,
-                "iterations": []
+                "iterations": [],
             }
             parse_details.append(parse_details_search)
         else:
             parse_details_search = None
 
-        bbox = [most_aligned_tl.x0, most_aligned_tl.y0,
-                most_aligned_tl.x1, most_aligned_tl.y1]
+        bbox = [
+            most_aligned_tl.x0,
+            most_aligned_tl.y0,
+            most_aligned_tl.x1,
+            most_aligned_tl.y1,
+        ]
 
         # For the body of the table, we only consider cells that have
         # alignments on both axis.
@@ -481,8 +469,9 @@ class TextNetworks(TextAlignments):
                 # This happens when text covers multiple rows - that's only
                 # allowed in the header, treated separately.
                 cols_bounds = find_columns_boundaries(tls_in_new_box)
-                if direction in ["bottom", "top"] and \
-                        len(cols_bounds) < len(last_cols_bounds):
+                if direction in ["bottom", "top"] and len(cols_bounds) < len(
+                    last_cols_bounds
+                ):
                     continue
 
                 # We have an expansion candidate: register it, update the
@@ -549,18 +538,19 @@ class Network(TextBaseParser):
     """
 
     def __init__(
-            self,
-            table_regions=None,
-            table_areas=None,
-            columns=None,
-            flag_size=False,
-            split_text=False,
-            strip_text="",
-            edge_tol=None,
-            row_tol=2,
-            column_tol=0,
-            debug=False,
-            **kwargs):
+        self,
+        table_regions=None,
+        table_areas=None,
+        columns=None,
+        flag_size=False,
+        split_text=False,
+        strip_text="",
+        edge_tol=None,
+        row_tol=2,
+        column_tol=0,
+        debug=False,
+        **kwargs
+    ):
         super().__init__(
             "network",
             table_regions=table_regions,
@@ -586,7 +576,8 @@ class Network(TextBaseParser):
 
         # Take all the textlines that are not just spaces
         all_textlines = [
-            t for t in self.horizontal_text + self.vertical_text
+            t
+            for t in self.horizontal_text + self.vertical_text
             if len(t.get_text().strip()) > 0
         ]
         textlines = self._apply_regions_filter(all_textlines)
@@ -595,8 +586,7 @@ class Network(TextBaseParser):
         self.table_bbox_parses = {}
         if self.parse_details is not None:
             parse_details_network_searches = []
-            self.parse_details["network_searches"] = \
-                parse_details_network_searches
+            self.parse_details["network_searches"] = parse_details_network_searches
             parse_details_bbox_searches = []
             self.parse_details["bbox_searches"] = parse_details_bbox_searches
             self.parse_details["col_searches"] = []
@@ -623,18 +613,15 @@ class Network(TextBaseParser):
                 # edge_tol instructions override the calculated vertical gap
                 edge_tol_hv = (
                     gaps_hv[0],
-                    gaps_hv[1] if self.edge_tol is None else self.edge_tol
+                    gaps_hv[1] if self.edge_tol is None else self.edge_tol,
                 )
                 bbox_body = text_network.search_table_body(
-                    edge_tol_hv,
-                    parse_details=parse_details_bbox_searches
+                    edge_tol_hv, parse_details=parse_details_bbox_searches
                 )
 
                 if parse_details_network_searches is not None:
                     # Preserve the current edge calculation for debugging
-                    parse_details_network_searches.append(
-                        copy.deepcopy(text_network)
-                    )
+                    parse_details_network_searches.append(copy.deepcopy(text_network))
 
             if bbox_body is None:
                 break
@@ -656,17 +643,14 @@ class Network(TextBaseParser):
                 # Apply a heuristic to salvage headers which formatting might
                 # be off compared to the rest of the table.
                 bbox_full = search_header_from_body_bbox(
-                    bbox_body,
-                    textlines,
-                    cols_anchors,
-                    gaps_hv[1]
+                    bbox_body, textlines, cols_anchors, gaps_hv[1]
                 )
 
             table_parse = {
                 "bbox_body": bbox_body,
                 "cols_boundaries": cols_boundaries,
                 "cols_anchors": cols_anchors,
-                "bbox_full": bbox_full
+                "bbox_full": bbox_full,
             }
             self.table_bbox_parses[bbox_full] = table_parse
 
@@ -676,31 +660,26 @@ class Network(TextBaseParser):
             # Remember what textlines we processed, and repeat
             for textline in tls_in_bbox:
                 textlines_processed[textline] = None
-            textlines = list(filter(
-                lambda textline: textline not in textlines_processed,
-                textlines
-            ))
+            textlines = list(
+                filter(lambda textline: textline not in textlines_processed, textlines)
+            )
 
     def _generate_columns_and_rows(self, bbox, user_cols):
         # select elements which lie within table_bbox
         self.t_bbox = text_in_bbox_per_axis(
-            bbox,
-            self.horizontal_text,
-            self.vertical_text
+            bbox, self.horizontal_text, self.vertical_text
         )
 
         all_tls = list(
             sorted(
                 filter(
                     lambda textline: len(textline.get_text().strip()) > 0,
-                    self.t_bbox["horizontal"] + self.t_bbox["vertical"]
+                    self.t_bbox["horizontal"] + self.t_bbox["vertical"],
                 ),
-                key=lambda textline: (-textline.y0, textline.x0)
+                key=lambda textline: (-textline.y0, textline.x0),
             )
         )
-        text_x_min, text_y_min, text_x_max, text_y_max = bbox_from_textlines(
-            all_tls
-        )
+        text_x_min, text_y_min, text_x_max, text_y_max = bbox_from_textlines(all_tls)
         # FRHTODO:
         # This algorithm takes the horizontal textlines in the bbox, and groups
         # them into rows based on their bottom y0.
@@ -711,16 +690,15 @@ class Network(TextBaseParser):
 
         if user_cols is not None:
             cols = [text_x_min] + user_cols + [text_x_max]
-            cols = [
-                (cols[i], cols[i + 1])
-                for i in range(0, len(cols) - 1)
-            ]
+            cols = [(cols[i], cols[i + 1]) for i in range(0, len(cols) - 1)]
         else:
             parse_details = self.table_bbox_parses[bbox]
             col_anchors = parse_details["cols_anchors"]
-            cols = list(map(
-                lambda idx: [col_anchors[idx], col_anchors[idx + 1]],
-                range(0, len(col_anchors) - 1)
-            ))
+            cols = list(
+                map(
+                    lambda idx: [col_anchors[idx], col_anchors[idx + 1]],
+                    range(0, len(col_anchors) - 1),
+                )
+            )
 
         return cols, rows, None, None

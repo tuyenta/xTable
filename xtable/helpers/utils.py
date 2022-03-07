@@ -82,9 +82,9 @@ def download_url(url):
     filename = f"{random_string(6)}.pdf"
     with tempfile.NamedTemporaryFile("wb", delete=False) as f:
         headers = {
-             "User-Agent": "Mozilla/5.0",
-             "Accept-Encoding": "gzip;q=1.0, deflate;q=0.9, br;q=0.8, compress;q=0.7, *;q=0.1"
-         }
+            "User-Agent": "Mozilla/5.0",
+            "Accept-Encoding": "gzip;q=1.0, deflate;q=0.9, br;q=0.8, compress;q=0.7, *;q=0.1",
+        }
         request = Request(url, None, headers)
         obj = urlopen(request)
         content_type = obj.info().get_content_type()
@@ -112,6 +112,14 @@ lattice_kwargs = [
 
 
 def validate_input(kwargs, flavor="lattice"):
+    """Validate the input params for different input flavor
+    Check the intersection of input params with the defaut list and answer that can be used or not
+
+    Args:
+        kwargs (_type_): input params
+        flavor (str, optional): Flavour approach. Defaults to "lattice".
+    """
+
     def check_intersection(parser_kwargs, input_kwargs):
         isec = set(parser_kwargs).intersection(set(input_kwargs.keys()))
         if isec:
@@ -126,6 +134,16 @@ def validate_input(kwargs, flavor="lattice"):
 
 
 def remove_extra(kwargs, flavor="lattice"):
+    """Remove extra parameters for each flavor method by compare with the pre-defined list.
+
+    Args:
+        kwargs (_type_): input params
+        flavor (str, optional): Flavour approach. Defaults to "lattice".
+
+    Returns:
+        _type_: _description_
+    """
+
     if flavor == "lattice":
         for key in kwargs.keys():
             if key in stream_kwargs:
@@ -147,62 +165,50 @@ class TemporaryDirectory(object):
         shutil.rmtree(self.name)
 
 
-def translate(x1, x2):
-    """Translates x2 by x1.
+def translate(x1: float, x2: float) -> float:
+    """Translate x2 by x1
 
-    Parameters
-    ----------
-    x1 : float
-    x2 : float
+    Args:
+        x1 (float): input value 1
+        x2 (float): input value 2
 
-    Returns
-    -------
-    x2 : float
-
+    Returns:
+        x2 (float(: output value
     """
     x2 += x1
     return x2
 
 
-def scale(x, s):
+def scale(x: float, s: float) -> float:
     """Scales x by scaling factor s.
 
-    Parameters
-    ----------
-    x : float
-    s : float
+    Args:
+        x (float): input value x
+        s (float): input value s
 
-    Returns
-    -------
-    x : float
-
+    Returns:
+        float: scaled value
     """
     x *= s
     return x
 
 
-def scale_pdf(k, factors):
+def scale_pdf(k: tuple, factors: tuple) -> tuple:
     """Translates and scales pdf coordinate space to image
     coordinate space.
 
-    Parameters
-    ----------
-    k : tuple
-        Tuple (x1, y1, x2, y2) representing table bounding box where
+    Args:
+        k (tuple): Tuple (x1, y1, x2, y2) representing table bounding box where
         (x1, y1) -> lt and (x2, y2) -> rb in PDFMiner coordinate
         space.
-    factors : tuple
-        Tuple (scaling_factor_x, scaling_factor_y, pdf_y) where the
+        factors (tuple): Tuple (scaling_factor_x, scaling_factor_y, pdf_y) where the
         first two elements are scaling factors and pdf_y is height of
         pdf.
 
-    Returns
-    -------
-    knew : tuple
-        Tuple (x1, y1, x2, y2) representing table bounding box where
+    Returns:
+       knew (tuple): Tuple (x1, y1, x2, y2) representing table bounding box where
         (x1, y1) -> lt and (x2, y2) -> rb in OpenCV coordinate
         space.
-
     """
     x1, y1, x2, y2 = k
     scaling_factor_x, scaling_factor_y, pdf_y = factors
@@ -214,29 +220,22 @@ def scale_pdf(k, factors):
     return knew
 
 
-def scale_image(tables, v_segments, h_segments, factors):
+def scale_image(tables: dict, v_segments: list, h_segments: list, factors: tuple):
     """Translates and scales image coordinate space to pdf
     coordinate space.
 
-    Parameters
-    ----------
-    tables : dict
-        Dict with table boundaries as keys and list of intersections
+    Args:
+        tables (dict): Dict with table boundaries as keys and list of intersections
         in that boundary as value.
-    v_segments : list
-        List of vertical line segments.
-    h_segments : list
-        List of horizontal line segments.
-    factors : tuple
-        Tuple (scaling_factor_x, scaling_factor_y, img_y) where the
-        first two elements are scaling factors and img_y is height of
-        image.
+        v_segments (list): List of vertical line segments.
+        h_segments (list): List of horizontal line segments.
+        factors (tuple): Tuple (scaling_factor_x, scaling_factor_y, img_y) where the
+        first two elements are scaling factors and img_y is height of image.
 
-    Returns
-    -------
-    tables_new : dict
-    v_segments_new : dict
-    h_segments_new : dict
+    Returns:
+        tables_new (dict)
+        v_segments_new (dict)
+        h_segments_new (dict)
 
     """
     scaling_factor_x, scaling_factor_y, img_y = factors
@@ -274,26 +273,18 @@ def scale_image(tables, v_segments, h_segments, factors):
     return tables_new, v_segments_new, h_segments_new
 
 
-def get_rotation(chars, horizontal_text, vertical_text):
+def get_rotation(chars: list, horizontal_text: list, vertical_text: list) -> string:
     """Detects if text in table is rotated or not using the current
     transformation matrix (CTM) and returns its orientation.
 
-    Parameters
-    ----------
-    horizontal_text : list
-        List of PDFMiner LTTextLineHorizontal objects.
-    vertical_text : list
-        List of PDFMiner LTTextLineVertical objects.
-    ltchar : list
-        List of PDFMiner LTChar objects.
+    Args:
+        horizontal_text (list): List of PDFMiner LTTextLineHorizontal objects.
+        vertical_text (list): List of PDFMiner LTTextLineVertical objects.
+        ltchar (list): List of PDFMiner LTChar objects.
 
-    Returns
-    -------
-    rotation : string
-        '' if text in table is upright, 'anticlockwise' if
-        rotated 90 degree anticlockwise and 'clockwise' if
-        rotated 90 degree clockwise.
-
+    Returns:
+        rotation (string): "" if text in table is upright, 'anticlockwise' if
+        rotated 90 degree anticlockwise and 'clockwise' if rotated 90 degree clockwise.
     """
     rotation = ""
     hlen = len([t for t in horizontal_text if t.get_text().strip()])
@@ -305,27 +296,18 @@ def get_rotation(chars, horizontal_text, vertical_text):
     return rotation
 
 
-def segments_in_bbox(bbox, v_segments, h_segments):
+def segments_in_bbox(bbox: tuple, v_segments: list, h_segments: list):
     """Returns all line segments present inside a bounding box.
 
-    Parameters
-    ----------
-    bbox : tuple
-        Tuple (x1, y1, x2, y2) representing a bounding box where
-        (x1, y1) -> lb and (x2, y2) -> rt in PDFMiner coordinate
-        space.
-    v_segments : list
-        List of vertical line segments.
-    h_segments : list
-        List of vertical horizontal segments.
+    Args:
+        bbox (tuple): Tuple (x1, y1, x2, y2) representing a bounding box where
+        (x1, y1) -> lb and (x2, y2) -> rt in PDFMiner coordinate space.
+        v_segments (list): List of vertical line segments.
+        h_segments (list): List of vertical horizontal segments.
 
-    Returns
-    -------
-    v_s : list
-        List of vertical line segments that lie inside table.
-    h_s : list
-        List of horizontal line segments that lie inside table.
-
+    Returns:
+        v_s (list): List of vertical line segments that lie inside table.
+        h_s (list): List of horizontal line segments that lie inside table.
     """
     lb = (bbox[0], bbox[1])
     rt = (bbox[2], bbox[3])
@@ -345,18 +327,13 @@ def segments_in_bbox(bbox, v_segments, h_segments):
 def text_in_bbox(bbox, text):
     """Returns all text objects present inside a bounding box.
 
-    Parameters
-    ----------
-    bbox : tuple
-        Tuple (x1, y1, x2, y2) representing a bounding box where
-        (x1, y1) -> lb and (x2, y2) -> rt in the PDF coordinate
-        space.
-    text : List of PDFMiner text objects.
+    Args:
+        bbox (tuple): Tuple (x1, y1, x2, y2) representing a bounding box where
+        (x1, y1) -> lb and (x2, y2) -> rt in the PDF coordinate space.
+        text (list of objects): List of PDFMiner text objects.
 
-    Returns
-    -------
-    t_bbox : list
-        List of PDFMiner text objects that lie inside table, discarding the overlapping ones
+    Returns:
+        t_bbox (list): List of PDFMiner text objects that lie inside table, discarding the overlapping ones
 
     """
     lb = (bbox[0], bbox[1])
@@ -376,7 +353,9 @@ def text_in_bbox(bbox, text):
                 continue
             if bbox_intersect(ba, bb):
                 # if the intersection is larger than 80% of ba's size, we keep the longest
-                if (bbox_intersection_area(ba, bb) / (bbox_area(ba) + SMOOTHING_FACTOR)) > 0.8:
+                if (
+                    bbox_intersection_area(ba, bb) / (bbox_area(ba) + SMOOTHING_FACTOR)
+                ) > 0.8:
                     if bbox_longer(bb, ba):
                         rest.discard(ba)
     unique_boxes = list(rest)
@@ -387,15 +366,12 @@ def text_in_bbox(bbox, text):
 def bbox_intersection_area(ba, bb) -> float:
     """Returns area of the intersection of the bounding boxes of two PDFMiner objects.
 
-    Parameters
-    ----------
-    ba : PDFMiner text object
-    bb : PDFMiner text object
+    Args:
+        ba : PDFMiner text object
+        bb : PDFMiner text object
 
-    Returns
-    -------
-    intersection_area : float
-        Area of the intersection of the bounding boxes of both objects
+    Returns:
+        intersection_area (float): Area of the intersection of the bounding boxes of both objects
 
     """
     x_left = max(ba.x0, bb.x0)
@@ -413,15 +389,11 @@ def bbox_intersection_area(ba, bb) -> float:
 def bbox_area(bb) -> float:
     """Returns area of the bounding box of a PDFMiner object.
 
-    Parameters
-    ----------
-    bb : PDFMiner text object
+    Args:
+        bb : PDFMiner text object
 
-    Returns
-    -------
-    area : float
-        Area of the bounding box of the object
-
+    Returns:
+        area (float): Area of the bounding box of the object
     """
     return (bb.x1 - bb.x0) * (bb.y1 - bb.y0)
 
@@ -429,16 +401,12 @@ def bbox_area(bb) -> float:
 def bbox_intersect(ba, bb) -> bool:
     """Returns True if the bounding boxes of two PDFMiner objects intersect.
 
-    Parameters
-    ----------
-    ba : PDFMiner text object
-    bb : PDFMiner text object
+    Args:
+        ba : PDFMiner text object
+        bb : PDFMiner text object
 
-    Returns
-    -------
-    overlaps : bool
-        True if the bounding boxes intersect
-
+    Returns:
+        overlaps (bool): True if the bounding boxes intersect
     """
     return ba.x1 >= bb.x0 and bb.x1 >= ba.x0 and ba.y1 >= bb.y0 and bb.y1 >= ba.y0
 
@@ -446,16 +414,12 @@ def bbox_intersect(ba, bb) -> bool:
 def bbox_longer(ba, bb) -> bool:
     """Returns True if the bounding box of the first PDFMiner object is longer or equal to the second.
 
-    Parameters
-    ----------
-    ba : PDFMiner text object
-    bb : PDFMiner text object
+    Args:
+        ba : PDFMiner text object
+        bb : PDFMiner text object
 
-    Returns
-    -------
-    longer : bool
-        True if the bounding box of the first object is longer or equal
-
+    Returns:
+        longer (bool): True if the bounding box of the first object is longer or equal
     """
     return (ba.x1 - ba.x0) >= (bb.x1 - bb.x0)
 
@@ -464,14 +428,12 @@ def merge_close_lines(ar, line_tol=2):
     """Merges lines which are within a tolerance by calculating a
     moving mean, based on their x or y axis projections.
 
-    Parameters
-    ----------
-    ar : list
-    line_tol : int, optional (default: 2)
+    Args:
+        ar (list)
+        line_tol (int): optional (default: 2)
 
-    Returns
-    -------
-    ret : list
+    Returns:
+        ret (list)
 
     """
     ret = []
@@ -488,17 +450,14 @@ def merge_close_lines(ar, line_tol=2):
     return ret
 
 
-def text_strip(text, strip=""):
+def text_strip(text: str, strip: str = "") -> str:
     """Strips any characters in `strip` that are present in `text`.
-    Parameters
-    ----------
-    text : str
-        Text to process and strip.
-    strip : str, optional (default: '')
-        Characters that should be stripped from `text`.
-    Returns
-    -------
-    stripped : str
+
+    Args:
+        text (str): Text to process and strip.
+        strip (str): Characters that should be stripped from `text`, optional (default: '').
+    Returns:
+        stripped (str): stripped text
     """
     if not strip:
         return text
@@ -625,12 +584,12 @@ def split_textline(table, textline, direction, flag_size=False, strip_text=""):
                             break
                         else:
                             # TODO: add test
-                            if cut == x_cuts[-1] :
-                                 col = cut[0]
-                                 #avoid list out of range
-                                 if col + 1 < len(table.cols) :
-                                     col = cut[0] + 1
-                                 cut_text.append((r, col, obj))
+                            if cut == x_cuts[-1]:
+                                col = cut[0]
+                                # avoid list out of range
+                                if col + 1 < len(table.cols):
+                                    col = cut[0] + 1
+                                cut_text.append((r, col, obj))
                     elif isinstance(obj, LTAnno):
                         cut_text.append((r, cut[0], obj))
         elif direction == "vertical" and not textline.is_empty():

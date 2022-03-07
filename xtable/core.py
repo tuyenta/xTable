@@ -528,8 +528,8 @@ class Table(object):
     def set_border(self):
         """Sets table border edges to True."""
         for index, row in enumerate(self.rows):
-             self.cells[index][0].left = True
-             self.cells[index][len(self.cols) - 1].right = True
+            self.cells[index][0].left = True
+            self.cells[index][len(self.cols) - 1].right = True
         for index, col in enumerate(self.cols):
             self.cells[0][index].top = True
             self.cells[len(self.rows) - 1][index].bottom = True

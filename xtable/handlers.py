@@ -360,7 +360,7 @@ class PDFHandler(object):
         suppress_stdout=False,
         parallel=False,
         layout_kwargs={},
-        **kwargs
+        **kwargs,
     ):
         """Extracts tables by calling parser.get_tables on all single
         page PDFs.
@@ -390,51 +390,52 @@ class PDFHandler(object):
 
         with TemporaryDirectory() as tempdir:
             cpu_count = mp.cpu_count()
-                # Using multiprocessing only when cpu_count > 1 to prevent
-                # a stallness issue when cpu_count is 1
+            # Using multiprocessing only when cpu_count > 1 to prevent
+            # a stallness issue when cpu_count is 1
             if parallel and cpu_count > 1:
                 with Pool(processes=cpu_count) as pool:
                     jobs = [
                         pool.apply_async(
                             self._parse_page,
-                            (p, tempdir, parser, suppress_stdout, layout_kwargs)
-                        ) for p in self.pages
+                            (p, tempdir, parser, suppress_stdout, layout_kwargs),
+                        )
+                        for p in self.pages
                     ]
                     for j in jobs:
                         t = j.get()
                         tables.extend(t)
             else:
                 for p in self.pages:
-                    t = self._parse_page(p, tempdir, parser, suppress_stdout, layout_kwargs)
+                    t = self._parse_page(
+                        p, tempdir, parser, suppress_stdout, layout_kwargs
+                    )
                     tables.extend(t)
         return TableList(sorted(tables))
 
-    def _parse_page(
-            self, page, tempdir, parser, suppress_stdout, layout_kwargs
-        ):
-            """Extracts tables by calling parser.get_tables on a single
-            page PDF.
+    def _parse_page(self, page, tempdir, parser, suppress_stdout, layout_kwargs):
+        """Extracts tables by calling parser.get_tables on a single
+        page PDF.
 
-            Parameters
-            ----------
-            page : str
-                Page number to parse
-            parser : Lattice or Stream
-                The parser to use (Lattice or Stream).
-            suppress_stdout : bool
-                Suppress logs and warnings.
-            layout_kwargs : dict, optional (default: {})
-                A dict of `pdfminer.layout.LAParams <https://github.com/euske/pdfminer/blob/master/pdfminer/layout.py#L33>`_ kwargs.
+        Parameters
+        ----------
+        page : str
+            Page number to parse
+        parser : Lattice or Stream
+            The parser to use (Lattice or Stream).
+        suppress_stdout : bool
+            Suppress logs and warnings.
+        layout_kwargs : dict, optional (default: {})
+            A dict of `pdfminer.layout.LAParams <https://github.com/euske/pdfminer/blob/master/pdfminer/layout.py#L33>`_ kwargs.
 
-            Returns
-            -------
-            tables : camelot.core.TableList
-                List of tables found in PDF.
+        Returns
+        -------
+        tables : camelot.core.TableList
+            List of tables found in PDF.
 
-            """
-            self._save_page(page, tempdir)
-            page_path = os.path.join(tempdir, f"page-{page}.pdf")
-            tables = parser.extract_tables(
-                page_path, suppress_stdout=suppress_stdout, layout_kwargs=layout_kwargs
-            )
-            return tables
+        """
+        self._save_page(page, tempdir)
+        page_path = os.path.join(tempdir, f"page-{page}.pdf")
+        tables = parser.extract_tables(
+            page_path, suppress_stdout=suppress_stdout, layout_kwargs=layout_kwargs
+        )
+        return tables
